@@ -17,7 +17,7 @@ type kvPair struct {
 	Value int
 }
 
-// NewLRUCache gets a new LRUCache instance 
+// NewLRUCache gets a new LRUCache instance
 func NewLRUCache(capacity int) *LRUCache {
 	lru := &LRUCache{
 		Capacity: capacity,
@@ -46,9 +46,7 @@ func (lru *LRUCache) Get(key int) int {
 func (lru *LRUCache) Put(key int, value int) {
 	if v, ok := lru.EMap[key]; ok {
 		// Move to front when key already exists
-		currentFront := lru.L.Front()
 		lru.L.MoveToFront(v)
-		lru.L.MoveToBack(currentFront)
 	} else {
 		// If already full, evicts the back element
 		if lru.Length() >= lru.Capacity {
