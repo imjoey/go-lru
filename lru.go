@@ -4,7 +4,7 @@ import (
 	"container/list"
 )
 
-// LRUCache :
+// LRUCache indicates a LRUCache instance
 type LRUCache struct {
 	Capacity int
 	L        *list.List
@@ -17,7 +17,7 @@ type kvPair struct {
 	Value int
 }
 
-// NewLRUCache : 
+// NewLRUCache gets a new LRUCache instance 
 func NewLRUCache(capacity int) *LRUCache {
 	lru := &LRUCache{
 		Capacity: capacity,
@@ -28,12 +28,12 @@ func NewLRUCache(capacity int) *LRUCache {
 	return lru
 }
 
-// Length :
+// Length returns the existing items count
 func (lru *LRUCache) Length() int {
 	return lru.L.Len()
 }
 
-// Get :
+// Get return the value by key
 func (lru *LRUCache) Get(key int) int {
 	if v, ok := lru.EMap[key]; ok {
 		lru.L.MoveToFront(v)
@@ -42,7 +42,7 @@ func (lru *LRUCache) Get(key int) int {
 	return -1
 }
 
-// Put :
+// Put adds <key, value> into LRUCache
 func (lru *LRUCache) Put(key int, value int) {
 	if v, ok := lru.EMap[key]; ok {
 		// Move to front when key already exists
@@ -50,7 +50,7 @@ func (lru *LRUCache) Put(key int, value int) {
 		lru.L.MoveToFront(v)
 		lru.L.MoveToBack(currentFront)
 	} else {
-		// Append to tail if length  < capacity
+		// If already full, evicts the back element
 		if lru.Length() >= lru.Capacity {
 			back := lru.L.Back()
 			delete(lru.EMap, back.Value.(*kvPair).Key)
