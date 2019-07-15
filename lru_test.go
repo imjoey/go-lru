@@ -31,7 +31,7 @@ func TestLRUCache(t *testing.T) {
 	index := 0
 	for e := lru.L.Front(); e != nil; e = e.Next() {
 		ev := e.Value.(*kvPair).Value
-		if e.Value.(*kvPair).Value != result[index] {
+		if ev != result[index] {
 			t.Fatalf("LRUCache: Expected: %d at index[%d], got: %d ", result[index], index, ev)
 		}
 		index++
